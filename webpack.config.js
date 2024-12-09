@@ -1,7 +1,11 @@
 // For manipulating file and directory paths.
 const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
 // Webpack plugin that generates an index.html file based on a template, and injects the resulting bundle.js automatically.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+dotenv.config();
 
 module.exports = {
   entry: './src/index.js', // Application entry point.
@@ -17,6 +21,7 @@ module.exports = {
     open: true,
     hot: true,
     compress: true,
+    historyApiFallback: true // If you try to directly access a path other than '/' (for example /movie/123), the dev server will not return a 404 and instead return index.html.
   },
   module: {
     rules: [
@@ -48,6 +53,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html'
-    })
+    }),
+    new webpack.DefinePlugin({
+        'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
+      })
   ]
 };
