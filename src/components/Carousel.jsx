@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './styles/Carousel.scss';
 
+// Carousel component displays a horizontal list of movies for a specific category
 const Carousel = ({ title, movies }) => {
   return (
     <div className="carousel">
